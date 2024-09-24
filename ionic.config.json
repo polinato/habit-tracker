@@ -1,0 +1,8 @@
+{
+  "name": "Habit tracker",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite",
+  "id": "ab1f17b0"
+}
