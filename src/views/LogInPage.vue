@@ -9,7 +9,7 @@
               <ion-grid>
                   <ion-row class="">
                       <ion-col>
-                      <h1 class="ion-padding">Create account</h1>
+                      <h1 class="ion-padding">Sign in</h1>
                       </ion-col>
                   </ion-row>
                   <ion-row>
@@ -115,7 +115,8 @@
       });
 
       const logIn = () => {
-        if (userStore.checkUser(newUser.value.email, newUser.value.password)) {
+        if (userStore.logIn(newUser.value.email, newUser.value.password)) {
+          console.log(userStore.currentUser);
           router.push({path: "tabs/main"});
         }
         else {
@@ -130,7 +131,7 @@
         passwordType,
         togglePasswordVisability, 
         newUser,
-        logIn
+        logIn, 
       };
     },
   });

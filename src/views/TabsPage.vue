@@ -1,5 +1,10 @@
 <template>
   <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{ userName }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom">
@@ -28,6 +33,13 @@
 </template>
 
 <script setup lang="ts">
-import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { homeSharp, calendarSharp, personSharp, statsChartSharp, addCircleSharp } from 'ionicons/icons';
+  import { useUserStore } from '@/stores/user';
+  import { computed, defineComponent } from 'vue';
+
+  import { homeSharp, calendarSharp, personSharp, statsChartSharp, addCircleSharp } from 'ionicons/icons';
+  import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet, IonTitle } from '@ionic/vue';
+
+  const userStore = useUserStore();
+  const userName = computed(() => userStore.currentUser ? userStore.getCurrentUserFirstName : "BYE!");
+
 </script>

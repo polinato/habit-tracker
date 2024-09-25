@@ -9,7 +9,7 @@
                 <ion-grid>
                     <ion-row class="">
                         <ion-col>
-                        <h1 class="ion-padding">Create account</h1>
+                        <h1 class="ion-padding">Create an account</h1>
                         </ion-col>
                     </ion-row>
                     <ion-row>
