@@ -1,11 +1,26 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import TabsPage from '../views/TabsPage.vue'
+import InfoPage from '@/views/InfoPage.vue';
+import SignUpPage from '@/views/SignUpPage.vue';
+import LogInPage from '@/views/LogInPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/tabs/tab1'
+    redirect: '/log-in'
+  },
+  {
+    path: '/info',
+    component: InfoPage
+  },
+  {
+    path: '/sign-up',
+    component: SignUpPage
+  },
+  {
+    path: '/log-in',
+    component: LogInPage
   },
   {
     path: '/tabs/',
@@ -13,19 +28,27 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
-        redirect: '/tabs/tab1'
+        redirect: '/tabs/main'
       },
       {
-        path: 'tab1',
-        component: () => import('@/views/Tab1Page.vue')
+        path: 'main',
+        component: () => import('@/views/tabs/MainPage.vue')
       },
       {
-        path: 'tab2',
-        component: () => import('@/views/Tab2Page.vue')
+        path: 'statistic',
+        component: () => import('@/views/tabs/StatisticPage.vue')
       },
       {
-        path: 'tab3',
-        component: () => import('@/views/Tab3Page.vue')
+        path: 'add-habit',
+        component: () => import('@/views/tabs/AddHabitPage.vue')
+      },
+      {
+        path: 'blocks',
+        component: () => import('@/views/tabs/BlocksPage.vue')
+      },
+      {
+        path: 'profile',
+        component: () => import('@/views/tabs/ProfilePage.vue')
       }
     ]
   }
