@@ -73,7 +73,7 @@
     IonButton, 
     IonIcon 
   } from '@ionic/vue';
-  import { defineComponent, ref, computed } from 'vue';
+  import { defineComponent, ref, computed, onMounted } from 'vue';
   import { arrowBackOutline, eye, eyeOff } from 'ionicons/icons';
   import { useUserStore } from '@/stores/user.js';
   import { useRouter } from 'vue-router';
@@ -109,6 +109,16 @@
 
       const router = useRouter();
 
+      const isLoggedIn = () => {
+        if (userStore.currentUser) {
+          router.push({path: "tabs/main"});
+        }
+      }
+
+      onMounted(() => {
+        isLoggedIn();
+      });
+
       const newUser = ref({
         email: '',
         password: '',
@@ -132,6 +142,7 @@
         togglePasswordVisability, 
         newUser,
         logIn, 
+        isLoggedIn
       };
     },
   });

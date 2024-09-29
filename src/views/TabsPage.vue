@@ -1,31 +1,32 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{ userName }}</ion-title>
+    <ion-header class="no-shadow">
+      <ion-toolbar class="no-shadow">
+        <ion-icon aria-hidden=true slot="start" size="large" :icon="personCircleSharp"></ion-icon>
+        <ion-label> {{userFirstName + " " + userSecondName}}  </ion-label>
       </ion-toolbar>
     </ion-header>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom">
         <ion-tab-button tab="main" href="/tabs/main">
-          <ion-icon aria-hidden="true" :icon="homeSharp" />
+          <ion-icon aria-hidden="true" :icon="homeSharp" size="md" />
         </ion-tab-button>
         
         <ion-tab-button tab="statistic" href="/tabs/statistic">
-          <ion-icon aria-hidden="true" :icon="statsChartSharp" />
+          <ion-icon aria-hidden="true" :icon="statsChartSharp" size="md" />
         </ion-tab-button>
 
         <ion-tab-button tab="add-habit" href="/tabs/add-habit">
-          <ion-icon aria-hidden="true" :icon="addCircleSharp" />
+          <ion-icon aria-hidden="true" :icon="addCircleSharp" size="md" />
         </ion-tab-button>
 
         <ion-tab-button tab="blocks" href="/tabs/blocks">
-          <ion-icon aria-hidden="true" :icon="calendarSharp" />
+          <ion-icon aria-hidden="true" :icon="calendarSharp" size="md" />
         </ion-tab-button>
 
         <ion-tab-button tab="profile" href="/tabs/profile">
-          <ion-icon aria-hidden="true" :icon="personSharp" />
+          <ion-icon aria-hidden="true" :icon="personSharp" size="md" />
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
@@ -33,13 +34,32 @@
 </template>
 
 <script setup lang="ts">
-  import { useUserStore } from '@/stores/user';
   import { computed, defineComponent } from 'vue';
 
-  import { homeSharp, calendarSharp, personSharp, statsChartSharp, addCircleSharp } from 'ionicons/icons';
-  import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet, IonTitle } from '@ionic/vue';
+  import { homeSharp, calendarSharp, personSharp, statsChartSharp, addCircleSharp, personCircleSharp } from 'ionicons/icons';
+  import { IonHeader, IonToolbar, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet, IonTitle, IonLabel, IonItem } from '@ionic/vue';
+  import { useUserStore } from '@/stores/user';
 
   const userStore = useUserStore();
-  const userName = computed(() => userStore.currentUser ? userStore.getCurrentUserFirstName : "BYE!");
+  const userFirstName = computed(() => userStore.currentUser ? userStore.getCurrentUserFirstName : "BYE!");
+  const userSecondName = computed(() => userStore.currentUser ? userStore.getCurrentUserSecondName : "BYE!");
 
 </script>
+
+<style scoped>
+
+.no-shadow {
+  --ion-shadow-none: none;
+  box-shadow: none !important;
+}
+
+ion-header {
+  display: contents;
+  height: 56px;
+}
+
+ion-toolbar {
+  padding-left: 12px;
+}
+
+</style>

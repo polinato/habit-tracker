@@ -100,9 +100,10 @@
     IonIcon, 
     IonAlert
   } from '@ionic/vue';
-  import { defineComponent, ref, computed, reactive } from 'vue';
+  import { defineComponent, ref, computed, reactive, onMounted } from 'vue';
   import { arrowBackOutline, eye, eyeOff } from 'ionicons/icons';
   import { useUserStore } from '@/stores/user.js';
+  import { useRouter } from 'vue-router';
 
   export default defineComponent({
     components: { 
@@ -131,6 +132,18 @@
 
       const userStore = useUserStore();
 
+      const router = useRouter();
+
+      const isLoggedIn = () => {
+        if (userStore.currentUser) {
+          router.push({path: "tabs/main"});
+        }
+      }
+
+      onMounted(() => {
+        isLoggedIn();
+      });
+
       const newUser = ref({
         firstName: '',
         secondName: '',
@@ -148,14 +161,17 @@
         if (userStore.isExist(newUser.value.email)) {
           alertData.alertHeader = "Oops!";
           alertData.alertMessage = "This email is already signed up!";
+          alertData.showAlert = true;
         } 
         else {
           userStore.addUser(newUser.value.firstName, newUser.value.secondName, newUser.value.email, newUser.value.password);
           alertData.alertHeader = "Congratulation!";
           alertData.alertMessage = "You are signed up!";
+          alertData.showAlert = true;
+
+          console.log(userStore.currentUser);
+          router.push({path: "tabs/main"});
         }
-        //console.log(userStore.users)
-        alertData.showAlert = true;
       };
 
       const resetAlert = () => {

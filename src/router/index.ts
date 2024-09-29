@@ -4,6 +4,7 @@ import TabsPage from '../views/TabsPage.vue'
 import InfoPage from '@/views/InfoPage.vue';
 import SignUpPage from '@/views/SignUpPage.vue';
 import LogInPage from '@/views/LogInPage.vue';
+import StatisticPage from '@/views/tabs/StatisticPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -27,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
     component: TabsPage,
     children: [
       {
-        path: '',
+        path: '/tabs',
         redirect: '/tabs/main'
       },
       {
@@ -36,7 +37,22 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'statistic',
-        component: () => import('@/views/tabs/StatisticPage.vue')
+        redirect: '/tabs/statistic/days',
+        component: StatisticPage,
+        children:[
+          {
+            path: 'days',
+            component: () => import('@/views/tabs/frequency/DaysPage.vue')
+          },
+          {
+            path: 'weeks',
+            component: () => import('@/views/tabs/frequency/WeeksPage.vue')
+          },
+          {
+            path: 'months',
+            component: () => import('@/views/tabs/frequency/MonthsPage.vue')
+          },
+        ]
       },
       {
         path: 'add-habit',
