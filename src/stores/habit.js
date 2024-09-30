@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 import { useUserStore } from "./user";
 
-export const useHobyStore = defineStore("hobby", {
+export const useHobyStore = defineStore("habit", {
     state: () => ({
-        hobbies: [],
+        habits: [],
     }),
 
     persist: true,
@@ -17,6 +17,8 @@ export const useHobyStore = defineStore("hobby", {
 
                     habitId,
                     userId,
+                    date: new Date(),
+                    progress: 0
                 }
             }
         }

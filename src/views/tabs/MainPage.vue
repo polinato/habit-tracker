@@ -8,6 +8,7 @@
 </template>
 
 <script setup lang="ts">
+
   import { useUserStore } from '@/stores/user';
   import { IonPage, IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonIcon} from '@ionic/vue';
 

@@ -9,23 +9,23 @@
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="main" href="/tabs/main">
+        <ion-tab-button id="main-button" tab="main" href="/tabs/main">
           <ion-icon aria-hidden="true" :icon="homeSharp" size="md" />
         </ion-tab-button>
         
-        <ion-tab-button tab="statistic" href="/tabs/statistic">
+        <ion-tab-button id="staistic-button" tab="statistic" href="/tabs/statistic">
           <ion-icon aria-hidden="true" :icon="statsChartSharp" size="md" />
         </ion-tab-button>
 
-        <ion-tab-button tab="add-habit" href="/tabs/add-habit">
+        <ion-tab-button id="add-habit-button" tab="add-habit" href="/tabs/add-habit">
           <ion-icon aria-hidden="true" :icon="addCircleSharp" size="md" />
         </ion-tab-button>
 
-        <ion-tab-button tab="blocks" href="/tabs/blocks">
+        <ion-tab-button id="blocks-button" tab="blocks" href="/tabs/blocks">
           <ion-icon aria-hidden="true" :icon="calendarSharp" size="md" />
         </ion-tab-button>
 
-        <ion-tab-button tab="profile" href="/tabs/profile">
+        <ion-tab-button id="profile-button" tab="profile" href="/tabs/profile">
           <ion-icon aria-hidden="true" :icon="personSharp" size="md" />
         </ion-tab-button>
       </ion-tab-bar>
@@ -59,7 +59,7 @@ ion-header {
 }
 
 ion-toolbar {
-  padding-left: 12px;
+  padding-left: 16px;
 }
 
 </style>
