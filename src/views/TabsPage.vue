@@ -9,24 +9,24 @@
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button id="main-button" tab="main" href="/tabs/main">
-          <ion-icon aria-hidden="true" :icon="homeSharp" size="md" />
+        <ion-tab-button id="main-button-tab" tab="main" href="/tabs/main">
+          <ion-icon class="tab-icon" aria-hidden="true" :icon="homeSharp" size="md" />
         </ion-tab-button>
         
-        <ion-tab-button id="staistic-button" tab="statistic" href="/tabs/statistic">
-          <ion-icon aria-hidden="true" :icon="statsChartSharp" size="md" />
+        <ion-tab-button id="staistic-button-tab" tab="statistic" href="/tabs/statistic">
+          <ion-icon class="tab-icon" aria-hidden="true" :icon="statsChartSharp" size="md" />
         </ion-tab-button>
 
-        <ion-tab-button id="add-habit-button" tab="add-habit" href="/tabs/add-habit">
-          <ion-icon aria-hidden="true" :icon="addCircleSharp" size="md" />
+        <ion-tab-button id="add-habit-button-tab" tab="add-habit" href="/tabs/add-habit">
+          <ion-icon class="tab-icon" aria-hidden="true" :icon="addCircleSharp" size="md" />
         </ion-tab-button>
 
-        <ion-tab-button id="blocks-button" tab="blocks" href="/tabs/blocks">
-          <ion-icon aria-hidden="true" :icon="calendarSharp" size="md" />
+        <ion-tab-button id="blocks-button-tab" tab="blocks" href="/tabs/blocks">
+          <ion-icon class="tab-icon" aria-hidden="true" :icon="calendarSharp" size="md" />
         </ion-tab-button>
 
-        <ion-tab-button id="profile-button" tab="profile" href="/tabs/profile">
-          <ion-icon aria-hidden="true" :icon="personSharp" size="md" />
+        <ion-tab-button id="profile-button-tab" tab="profile" href="/tabs/profile">
+          <ion-icon class="tab-icon" aria-hidden="true" :icon="personSharp" size="md" />
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
@@ -60,6 +60,14 @@ ion-header {
 
 ion-toolbar {
   padding-left: 16px;
+}
+
+.tab-icon {
+  color: var(--ion-color-secondary);
+}
+
+ion-tab-button.tab-selected .tab-icon {
+  color: var(--ion-color-primary);
 }
 
 </style>

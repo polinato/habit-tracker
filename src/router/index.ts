@@ -4,7 +4,7 @@ import TabsPage from '../views/TabsPage.vue'
 import InfoPage from '@/views/InfoPage.vue';
 import SignUpPage from '@/views/SignUpPage.vue';
 import LogInPage from '@/views/LogInPage.vue';
-import StatisticPage from '@/views/tabs/StatisticPage.vue';
+import StatisticPage from '@/views/tabs/statistic/StatisticPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -33,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'main',
-        component: () => import('@/views/tabs/MainPage.vue')
+        component: () => import('@/views/tabs/main/MainPage.vue')
       },
       {
         path: 'statistic',
@@ -42,29 +42,29 @@ const routes: Array<RouteRecordRaw> = [
         children:[
           {
             path: 'days',
-            component: () => import('@/views/tabs/frequency/DaysPage.vue')
+            component: () => import('@/views/tabs/statistic/frequency/DaysPage.vue')
           },
           {
             path: 'weeks',
-            component: () => import('@/views/tabs/frequency/WeeksPage.vue')
+            component: () => import('@/views/tabs/statistic/frequency/WeeksPage.vue')
           },
           {
             path: 'months',
-            component: () => import('@/views/tabs/frequency/MonthsPage.vue')
+            component: () => import('@/views/tabs/statistic/frequency/MonthsPage.vue')
           },
         ]
       },
       {
         path: 'add-habit',
-        component: () => import('@/views/tabs/AddHabitPage.vue')
+        component: () => import('@/views/tabs/add-habit/AddHabitPage.vue')
       },
       {
         path: 'blocks',
-        component: () => import('@/views/tabs/BlocksPage.vue')
+        component: () => import('@/views/tabs/blocks/BlocksPage.vue')
       },
       {
         path: 'profile',
-        component: () => import('@/views/tabs/ProfilePage.vue')
+        component: () => import('@/views/tabs/profile/ProfilePage.vue')
       }
     ]
   }

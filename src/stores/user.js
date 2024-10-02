@@ -21,7 +21,7 @@ export const useUserStore = defineStore("user", {
       this.users.push(newUser);
     },
 
-    addHabit(name, frequency, unit, amount) {
+    addHabit(name, frequency, unit, amount, icon) {
 
         if (this.currentUser) {
             const user = this.users.find((user) => user.id === this.currentUser);
@@ -38,6 +38,7 @@ export const useUserStore = defineStore("user", {
                     frequency,
                     unit,
                     amount,
+                    icon
                 };
         
                 user.habits.push(newHabit);

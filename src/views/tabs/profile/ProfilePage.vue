@@ -36,5 +36,8 @@
 
 <style scoped>
 
+  ion-icon {
+    margin-right: 8px;
+  }
 
 </style>
