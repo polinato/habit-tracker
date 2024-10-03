@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      
+
       <ul class="card-list">
         <ion-card v-for="habit in habits" :key="habit.id" class="habit-card">
           <div class="habit-content">
@@ -105,7 +105,7 @@ const newHabit = ref({
   frequency: "",
   unit: "",
   amount: 0,
-  icon: icons.waterSharp 
+  icon: "waterSharp"
 });
 
 const userStore = useUserStore();
@@ -219,14 +219,14 @@ onMounted(() => {
   width: -webkit-fill-available;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-left: 16px;
 }
 
 .habit-header {
   text-align: left;
   padding: 0px;
-  font-size: 20px;
+  font-size: large;
   font-weight: bold;
   color: var(--ion-text-color);
 }
@@ -238,7 +238,7 @@ onMounted(() => {
 }
 
 .card-list {
-  padding: 16px;
+  padding: 0px 8px 8px 8px;
 }
 
 .habit-management {

@@ -1,7 +1,7 @@
 <template>
   <ion-page>
-    <ion-header class="no-shadow">
-      <ion-toolbar class="no-shadow">
+    <ion-header class="shadow">
+      <ion-toolbar class="shadow">
         <ion-icon aria-hidden=true slot="start" size="large" :icon="personCircleSharp"></ion-icon>
         <ion-label> {{userFirstName + " " + userSecondName}}  </ion-label>
       </ion-toolbar>
@@ -48,10 +48,11 @@
 
 <style scoped>
 
-.no-shadow {
-  --ion-shadow-none: none;
-  box-shadow: none !important;
+.shadow {
+  background-color: var(--ion-background-color);
+  box-shadow: 0px 18px 12px 4px var(--ion-background-color);
 }
+
 
 ion-header {
   display: contents;
@@ -60,6 +61,11 @@ ion-header {
 
 ion-toolbar {
   padding-left: 16px;
+}
+
+ion-tab-bar {
+  box-shadow: 0px -18px 12px 4px var(--ion-background-color);
+  background-color: var(--ion-background-color);
 }
 
 .tab-icon {
