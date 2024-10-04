@@ -50,9 +50,8 @@
 
 .shadow {
   background-color: var(--ion-background-color);
-  box-shadow: 0px 18px 12px 4px var(--ion-background-color);
+ /* box-shadow: 0px 18px 12px 4px var(--ion-background-color);*/
 }
-
 
 ion-header {
   display: contents;
@@ -64,7 +63,7 @@ ion-toolbar {
 }
 
 ion-tab-bar {
-  box-shadow: 0px -18px 12px 4px var(--ion-background-color);
+ /* box-shadow: 0px -18px 12px 4px var(--ion-background-color);*/
   background-color: var(--ion-background-color);
 }
 
@@ -74,6 +73,10 @@ ion-tab-bar {
 
 ion-tab-button.tab-selected .tab-icon {
   color: var(--ion-color-primary);
+}
+
+ion-tabs {
+  position: relative !important;
 }
 
 </style>

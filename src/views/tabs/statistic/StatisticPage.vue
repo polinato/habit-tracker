@@ -55,7 +55,8 @@
   }
 
   #tab-bar-frequency {
-    background-color: aliceblue;
+    background-color: var(--ion-color-primary-tint);
+    --color: var(--ion-text-color-step-50) !important;
     border-radius: 40px;
     width:200px;
     height:40px;
@@ -78,7 +79,8 @@
   }
 
   #tab-bar-frequency .tab-selected {
-    background-color:lightskyblue;
+    background-color: var(--ion-color-primary);
+    color: var(--ion-text-color-step-50) !important;
     border-radius: 40px;
   }
 
@@ -87,8 +89,11 @@
   }
   
   ion-content {
-    --padding-top:64px;
     --padding-left:8px;
     --padding-right:8px;
+    --padding-top:8px;
+    --padding-bottom:8px;
+    display: contents;
+    padding: 8px;
   }
 </style>

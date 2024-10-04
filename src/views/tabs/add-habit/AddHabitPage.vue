@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true">
+    <ion-content class="gradient-content">
 
       <ul class="card-list">
         <ion-card v-for="habit in habits" :key="habit.id" class="habit-card">
@@ -172,6 +172,54 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
+.gradient-content {
+  position: relative;
+  --padding-start: 0; /* Remove default padding */
+  padding: 0; /* Custom padding */
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensures it fills the space between header and footer */
+  overflow-y: auto; /* Enable scrolling if necessary */
+}
+
+.card-list {
+  flex: 1;
+  overflow-y: scroll;
+  position: relative;
+  padding: 12px;
+  scroll-padding: 12px;
+}
+
+/* Gradient Fading Effect at Top and Bottom */
+.gradient-content::before, 
+.gradient-content::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50px; /* Size of the gradient area */
+  pointer-events: none; /* Allow interaction with items below */
+  z-index: 1;
+}
+
+.gradient-content::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+.gradient-content::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+ion-content {
+  display: contents;
+  padding: 8px;
+  --padding-top:8px;
+  --padding-bottom:8px;
+}
+
 .icon-grid {
   display: flex;
   flex-wrap: wrap;
@@ -239,6 +287,7 @@ onMounted(() => {
 
 .card-list {
   padding: 0px 8px 8px 8px;
+  display: contents;
 }
 
 .habit-management {
@@ -265,6 +314,11 @@ onMounted(() => {
   margin: -8px;
 }
 
+.inner-scroll {
+  padding-top: 8px;
+  top: 8px !important;
+}
+
 #delete-habit-button .habit-management-icon {
   color: var(--ion-color-danger);
 }
@@ -282,4 +336,5 @@ onMounted(() => {
   width: fill-available;
   height: 36px;
 }
+
 </style>
