@@ -13,7 +13,7 @@
               <ion-label class="habit-label">{{ habit.amount }} {{ habit.unit }} {{ habit.frequency }}</ion-label>
             </div>
             <div class="habit-management">
-              <ion-button class="habit-button" id="edit-habit-button">
+              <ion-button @click="editHabit(habit.id)" class="habit-button" id="edit-habit-button">
                 <ion-icon class="habit-management-icon" aria-hidden="true" size="small" :icon="icons.hammerSharp"></ion-icon>
               </ion-button>
               <ion-button @click="deleteHabit(habit.id)" class="habit-button" id="delete-habit-button">
@@ -24,10 +24,19 @@
         </ion-card>
       </ul>
 
-      <ion-modal :initial-breakpoint="0.26" :breakpoints="[0, 0.26, 0.5]" ref="modal" :is-open="isModalOpen" class="modal" aria-hidden="!isModalOpen" trigger="add-habit-button-tab">
+      <!--Add new habit modal-->
+      <ion-modal 
+        :initial-breakpoint="0.26" 
+        ref="modal" 
+        :is-open="modals.addHabit" 
+        class="modal" 
+        aria-hidden="!modals.addHabit"
+        trigger="add-habit-button-tab"
+        :swipe-to-close="false"
+        :backdrop-dismiss="false">
         <ion-content class="ion-padding">
           
-          <ion-modal :is-open="isIconPickerOpen" @will-dismiss="closeIconPicker">
+          <ion-modal :is-open="modals.iconPicker" @will-dismiss="closeModal('iconPicker')">
             <ion-content class="ion-padding">
               <div class="icon-grid">
                 <ion-button
@@ -42,7 +51,7 @@
           </ion-modal>
 
           <ion-item lines="none">
-            <ion-button id="pick-icon-button" @click="openIconPicker">
+            <ion-button id="pick-icon-button" @click="openModal('iconPicker')">
               <ion-icon :icon="selectedIcon" aria-hidden="true" size="large"></ion-icon>
             </ion-button>
 
@@ -80,13 +89,90 @@
               label-placement="stacked"
               interface="popover"
               value="daily">
+              <ion-select-option value="daily" aria-selected="true">daily</ion-select-option>
+              <ion-select-option value="weekly">weekly</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-button id="close-button" @click="closeManagement('addHabit')">Close</ion-button>
+            <ion-button id="add-habit-button" @click="addHabit">Add</ion-button>
+          </ion-item>
+        </ion-content>
+      </ion-modal>
+
+      <!--Edit habit modal-->
+      <ion-modal 
+        :initial-breakpoint="0.26" 
+        ref="modal" 
+        :is-open="modals.editHabit" 
+        class="modal" 
+        aria-hidden="!modals.editHabit"
+        :swipe-to-close="false"
+        :backdrop-dismiss="false">
+        <ion-content class="ion-padding">
+          
+          <ion-modal :is-open="modals.iconPicker" @will-dismiss="closeModal('iconPicker')">
+            <ion-content class="ion-padding">
+              <div class="icon-grid">
+                <ion-button
+                  v-for="iconName in myIcons"
+                  :key="iconName"
+                  class="icon-picker-button"
+                  @click="selectIcon(iconName)">
+                  <ion-icon :icon="getIcon(iconName)" aria-hidden="true" size="large"></ion-icon>
+                </ion-button>
+              </div>
+            </ion-content>
+          </ion-modal>
+
+          <ion-item lines="none">
+            <ion-button id="pick-icon-button" @click="openModal('iconPicker')">
+              <ion-icon :icon="getIcon(editedHabit.icon)" aria-hidden="true" size="large"></ion-icon>
+            </ion-button>
+
+            <ion-input
+              v-model="editedHabit.name"
+              id="habit-name"
+              class="ion-margin-horizontal"
+              label="Habit's name:"
+              label-placement="stacked"
+              placeholder="Drink water">
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-input
+              v-model="editedHabit.amount"
+              id="habit-amount"
+              label="Amount:"
+              label-placement="stacked"
+              type="number"
+              placeholder="10"
+              value="1">
+            </ion-input>
+            <ion-input
+              v-model="editedHabit.unit"
+              id="habit-unit"
+              label="Unit:"
+              label-placement="stacked"
+              placeholder="cups">
+            </ion-input>
+            <ion-select
+              v-model="editedHabit.frequency"
+              id="habit-frequency"
+              label="Frequency:"
+              label-placement="stacked"
+              interface="popover"
+              value="editedHabit.frequency">
               <ion-select-option value="daily">daily</ion-select-option>
               <ion-select-option value="weekly">weekly</ion-select-option>
             </ion-select>
           </ion-item>
 
           <ion-item lines="none">
-            <ion-button id="add-habit-button" @click="addHabit">Add</ion-button>
+            <ion-button id="close-button" @click="closeManagement('editHabit')">Close</ion-button>
+            <ion-button id="update-habit-button" @click="updateHabit">Update</ion-button>
           </ion-item>
         </ion-content>
       </ion-modal>
@@ -101,6 +187,7 @@ import * as icons from 'ionicons/icons';
 import { computed, ref, onMounted } from 'vue';
 
 const newHabit = ref({
+  id: 0,
   name: "",
   frequency: "",
   unit: "",
@@ -108,14 +195,18 @@ const newHabit = ref({
   icon: "waterSharp"
 });
 
+const editedHabit = ref(newHabit);
+const resetedHabit = ref(newHabit);
+
 const userStore = useUserStore();
 const habits = computed(() => userStore.getCurrentUserHabits);
-const isModalOpen = ref(true);
 
 const addHabit = () => {
   if (newHabit.value.name && newHabit.value.frequency && newHabit.value.unit && newHabit.value.amount) {
     userStore.addHabit(newHabit.value.name, newHabit.value.frequency, newHabit.value.unit, newHabit.value.amount, newHabit.value.icon);
-    closeModal();
+
+    //resetHabit("newHabit");
+    closeModal("addHabit");
   }
 };
 
@@ -123,22 +214,47 @@ const deleteHabit = (habitId: number) => {
   userStore.deleteHabit(habitId);
 };
 
+const editHabit = (habitId: number) => {
+  const habit = userStore.getUsersHabitById(habitId);
+
+  if (habit) {
+    editedHabit.value = { ...habit };
+    openModal("editHabit");
+  } 
+  else {
+    console.error("Habit not found.");
+  }
+};
+
+const updateHabit = () => {
+  if (
+    editedHabit.value.name &&
+    editedHabit.value.frequency &&
+    editedHabit.value.unit &&
+    editedHabit.value.amount
+  ) {
+    userStore.editHabit(
+      editedHabit.value.id, 
+      editedHabit.value.name,
+      editedHabit.value.frequency,
+      editedHabit.value.unit,
+      editedHabit.value.amount,
+      editedHabit.value.icon
+    );
+    //resetHabit("editedHabit");
+    closeModal("editHabit");
+  } else {
+    console.error("Please fill in all fields");
+  }
+};
+
 const selectedIcon = ref(icons.waterSharp); 
-const isIconPickerOpen = ref(false);
 const myIcons = ref<string[]>([]);
-
-const openIconPicker = () => {
-  isIconPickerOpen.value = true;
-};
-
-const closeIconPicker = () => {
-  isIconPickerOpen.value = false;
-};
 
 const selectIcon = (iconName: string) => {
   selectedIcon.value = getIcon(iconName); 
   newHabit.value.icon = iconName; 
-  closeIconPicker();
+  closeModal("iconPicker");
 };
 
 const loadIcons = async () => {
@@ -156,16 +272,39 @@ const getIcon = (iconName: string) => {
   return icons[iconName as keyof typeof icons]; 
 };
 
-const openModal = () => {
-  isModalOpen.value = true;
+const modals = ref({
+  addHabit: true,
+  editHabit: false,
+  iconPicker: false
+})
+
+const closeManagement = (modal: "addHabit" | "editHabit") => {
+  closeModal(modal);
+}
+
+const openModal = (modal: "addHabit" | "editHabit" | "iconPicker") => {
+ /* if(modal == "addHabit") resetHabit("newHabit"); 
+  else if (modal == "editHabit") resetHabit("editedHabit");*/
+  modals.value[modal] = true;
 };
 
-const closeModal = () => {
-  isModalOpen.value = false;
+const closeModal = (modal: "addHabit" | "editHabit" | "iconPicker") => {
+  modals.value[modal] = false;
 };
-
+/*
+const resetHabit = (habit: "newHabit" | "editedHabit" ) => {
+  if (habit == "newHabit") {
+    newHabit.value = Object.assign(resetedHabit);
+    console.log(newHabit);
+  }
+  else {
+    editedHabit.value = Object.assign(resetedHabit);
+    console.log(editedHabit);
+  }
+}
+*/
 onMounted(() => {
-  openModal();
+ /* openModal("addModal");*/
   loadIcons();
   console.log(userStore.getCurrentUserHabits);
 });
@@ -331,10 +470,14 @@ ion-content {
   width: auto;
 }
 
-#add-habit-button {
+#add-habit-button, #update-habit-button, #close-button {
   width: -webkit-fill-available;
   width: fill-available;
   height: 36px;
+}
+
+#close-button.button-solid {
+  --background: var(--ion-color-primary-tint) !important;
 }
 
 </style>

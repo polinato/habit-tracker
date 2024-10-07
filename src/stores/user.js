@@ -40,7 +40,7 @@ export const useUserStore = defineStore("user", {
                     amount,
                     icon
                 };
-        
+
                 user.habits.push(newHabit);
             } 
             
@@ -77,11 +77,37 @@ export const useUserStore = defineStore("user", {
             console.error("No current user is logged in.");
         }
     },
+
+    editHabit(id, name, frequency, unit, amount, icon) {
+
+      if (this.currentUser) {
+        const user = this.users.find((user) => user.id === this.currentUser);
+    
+        if (user) {
+          const habit = user.habits.find((habit) => habit.id === id);
+    
+          if (habit) {
+            habit.name = name;
+            habit.frequency = frequency;
+            habit.unit = unit;
+            habit.amount = amount;
+            habit.icon = icon;
+          } 
+          else {
+            console.error("Habit not found.");
+          }
+        } 
+        else {
+          console.error("User not found.");
+        }
+      } 
+      else {
+        console.error("No current user is logged in.");
+      }
+    },
       
     logIn(email, password) {
-      const user = this.users.find(
-        (user) => user.email === email && user.password === password
-      );
+      const user = this.users.find((user) => user.email === email && user.password === password);
 
       if (user) {
         this.currentUser = user.id;
@@ -133,5 +159,19 @@ export const useUserStore = defineStore("user", {
         : null;
       return user ? user.habits : [];
     },
-  },
+  
+    getUsersHabitById: (state) => (habitId) => {
+
+     /* const user = state.currentUser
+        ? state.users.find((user) => user.id === state.currentUser)
+        : null;
+      
+      if (user && Array.isArray(user.habits)) {*/
+      const user = state.users.find((user) => user.id === state.currentUser);
+      return user ? user.habits.find((habit) => habit.id === habitId) : null;
+     /* }
+      
+      return null;*/
+    },
+  }
 });
